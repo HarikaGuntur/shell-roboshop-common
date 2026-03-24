@@ -7,6 +7,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
+SCRIPT_DIR=$PWD
 START_TIME=$(date +%s)
 MONGODB_HOST=mongodb.dawshars.online
 
@@ -21,7 +22,7 @@ check_root(){
     fi
 }
 
-Validate(){
+VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$(date "+%Y-%m-%d %H:%M:%S")| $2 ... $R FAILURE $N" | tee -a $LOGS_FILE
         exit 1
@@ -79,6 +80,11 @@ systemd_setup(){
     systemctl enable $app_name  &>>$LOGS_FILE
     systemctl start $app_name
     VALIDATE $? "Starting and enabling $app_name"
+}
+
+app_restart(){
+    systemctl restart $app_name
+    VALIDATE $? "Restarting $app_name"
 }
 
 print_total_time(){
