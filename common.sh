@@ -9,6 +9,8 @@ Y="\e[33m"
 N="\e[0m"
 START_TIME=$(date +%s)
 
+mkdir -p $LOGS_FOLDER
+
 echo "$(date "+%Y-%m-%d %H:%M:%S") | script started executing at:$(date)" | tee -a $LOGS_FILE
 
 check_root(){
@@ -17,8 +19,6 @@ check_root(){
         exit 1
     fi
 }
-
-mkdir -p $LOGS_FOLDER
 
 Validate(){
     if [ $1 -ne 0 ]; then
@@ -32,5 +32,5 @@ Validate(){
 print_total_time(){
     END_TIME=$(date +%s)
     TOTAL_TIME=$(($END_TIME - $START_TIME))
-    echo -e "$(date "+%Y-%m-%d %H:%M:%S") | "script execute in: $TOTAL_TIME seconds $N" | tee -a $LOGS_FILE
+    echo -e "$(date "+%Y-%m-%d %H:%M:%S") | script execute in: $TOTAL_TIME seconds $N" | tee -a $LOGS_FILE
 }
