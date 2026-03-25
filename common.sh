@@ -10,6 +10,7 @@ N="\e[0m"
 SCRIPT_DIR=$PWD
 START_TIME=$(date +%s)
 MONGODB_HOST=mongodb.dawshars.online
+MYSQL_HOST=mysql.dawshars.online
 
 mkdir -p $LOGS_FOLDER
 
@@ -42,6 +43,27 @@ nodejs_setup(){
     VALIDATE $? "Install NodeJS"
 
     npm install  &>>$LOGS_FILE
+    VALIDATE $? "Installing dependencies"
+}
+
+java_setup(){
+    dnf install maven -y &>>$LOGS_FILE
+    VALIDATE $? "Installing Maven"
+
+    cd /app 
+    mvn clean package &>>$LOGS_FILE
+    VALIDATE $? "Installing and Building $app_name"
+
+    mv target/$app_name-1.0.jar $app_name.jar 
+    VALIDATE $? "Moving and Renaming $app_name"
+}
+
+python_setup(){
+    dnf install python3 gcc python3-devel -y &>>$LOGS_FILE
+    VALIDATE $? "Installing Python"
+
+    cd /app 
+    pip3 install -r requirements.txt &>>$LOGS_FILE
     VALIDATE $? "Installing dependencies"
 }
 
