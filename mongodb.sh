@@ -5,21 +5,21 @@ source ./common.sh
 check_root
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo
-Validate $? "copying mongo repo"
+VALIDATE $? "copying mongo repo"
 
 dnf install mongodb-org -y &>>$LOGS_FILE
-Validate $? "installed mongodb"
+VALIDATE $? "installed mongodb"
 
 systemctl enable mongod 
-Validate $? "enabled mongodb"
+VALIDATE $? "enabled mongodb"
 
 systemctl start mongod 
-Validate $? "started mongod"
+VALIDATE $? "started mongod"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
-Validate $? "allowing remote connections"
+VALIDATE $? "allowing remote connections"
 
 systemctl restart mongod
-Validate $? "restarted mongodb"
+VALIDATE $? "restarted mongodb"
 
 print_total_time
