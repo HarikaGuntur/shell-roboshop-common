@@ -14,7 +14,7 @@ MYSQL_HOST=mysql.dawshars.online
 
 mkdir -p $LOGS_FOLDER
 
-echo "$(date "+%Y-%m-%d %H:%M:%S") | script started executing at:$(date)" | tee -a $LOGS_FILE
+echo "$(date "+%Y-%m-%d %H:%M:%S") | Script started executing at: $(date)" | tee -a $LOGS_FILE
 
 check_root(){
     if [ $USERID -ne 0 ]; then
@@ -25,10 +25,10 @@ check_root(){
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo -e "$(date "+%Y-%m-%d %H:%M:%S")| $2 ... $R FAILURE $N" | tee -a $LOGS_FILE
+        echo -e "$(date "+%Y-%m-%d %H:%M:%S") | $2 ... $R FAILURE $N" | tee -a $LOGS_FILE
         exit 1
     else
-        echo -e "$(date "+%Y-%m-%d %H:%M:%S")| $2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+        echo -e "$(date "+%Y-%m-%d %H:%M:%S") | $2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
 
@@ -111,6 +111,6 @@ app_restart(){
 
 print_total_time(){
     END_TIME=$(date +%s)
-    TOTAL_TIME=$(($END_TIME - $START_TIME))
-    echo -e "$(date "+%Y-%m-%d %H:%M:%S") | script execute in: $TOTAL_TIME seconds $N" | tee -a $LOGS_FILE
+    TOTAL_TIME=$(( $END_TIME - $START_TIME ))
+    echo -e "$(date "+%Y-%m-%d %H:%M:%S") | Script execute in: $G $TOTAL_TIME seconds $N" | tee -a $LOGS_FILE
 }
